@@ -39,7 +39,8 @@ class Bird(pygame.sprite.Sprite):
         self.sprite_rate_index += 1
         if self.sprite_rate_index % 5 == 0:
             self.sprite_index += 1
-            self.image = self.flap_sprites[self.sprite_index % len(self.flap_sprites)]
+            self.image = self.flap_sprites[
+                self.sprite_index % len(self.flap_sprites)]
 
     def refresh(self):
         self.change_flap_sprite()

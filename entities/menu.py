@@ -2,8 +2,9 @@ from collections import OrderedDict
 
 import pygame
 
-from config import HEIGHT, WIDTH
+from config import HEIGHT, WIDTH, GAME_WIDTH
 from entities.option_menu import OptionMenu
+from entities.scorepanel import ScorePanel
 from ml_engine.ga_ann_flappy_engine.ia_flappy_engine import IaFlappyEngine
 from ml_engine.manual_flappy_engine import ManualFlappyEngine
 from repository.image_loader import ImageLoader
@@ -24,12 +25,17 @@ class Menu(pygame.Surface):
         self.menu_options = OrderedDict()
         self.arrow_alpha_increment = 1
         self.y = 0
-
         self.arrow = self.image_loader.get_image("arrow.png").convert_alpha()
+
         self.add_menu_option("Manual", lambda: self.game.change_scene(
-            PlayScene(self.game, ManualFlappyEngine())))
+            PlayScene(self.game, ManualFlappyEngine(), None)))
+
+        ia_flappy_engine = IaFlappyEngine()
         self.add_menu_option("Bot", lambda: self.game.change_scene(
-            PlayScene(self.game, IaFlappyEngine())))
+            PlayScene(self.game, IaFlappyEngine(),
+                      ScorePanel(self.game.screen, GAME_WIDTH,
+                                 WIDTH - GAME_WIDTH,
+                                 ia_flappy_engine.get_birds()))))
 
         self.set_header((width / 2))
 
@@ -73,23 +79,6 @@ class Menu(pygame.Surface):
     def text_objects(text, font, color):
         textSurface = font.render(text, True, color)
         return textSurface, textSurface.get_rect()
-
-    # def increase_alpha(self):
-    #     if self.arrow.get_alpha() >= 255:
-    #         self.arrow_alpha_increment = -1
-    #     elif self.arrow.get_alpha() <= 30:
-    #         self.arrow_alpha_increment = 1
-    #     self.arrow.set_alpha(
-    #         self.arrow.get_alpha() + self.arrow_alpha_increment)
-    #     self.arrow.convert()
-    #
-    # def next(self):
-    #     self.increase_alpha()
-    #     option = self.menu_options[self.select_option]
-    #     self.blit(self.arrow,
-    #               ((option.x - self.arrow.get_width() - 15),
-    #                (self.y + option.y + (self.arrow.get_height() / 2))),
-    #               (0, 0, self.arrow.get_width(), self.arrow.get_height()))
 
     def refresh(self):
         self.fill(pygame.Color(0, 0, 0, 0))
