@@ -1,6 +1,5 @@
 import pygame
 
-from config import HEIGHT, WIDTH
 from repository.image_loader import ImageLoader
 from utils import root_path
 

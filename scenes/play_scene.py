@@ -36,7 +36,7 @@ class PlayScene(Scene):
         next_pipe = next(pipes for pipes in self.pipes if not pipes.visited)
         self.flappy_engine.on_update(next_pipe.get_x(), next_pipe.get_y())
         self.refresh_pipes()
-        # self.check_collision()
+        self.check_collision()
         self.refresh_birds_score()
         self.check_if_all_birds_are_dead()
         self.distance += MAP_SPEED * int(time * 0.1)
@@ -70,16 +70,14 @@ class PlayScene(Scene):
         self.flappy_engine.check_floor_collision(self.floor)
 
     def check_if_all_birds_are_dead(self):
-        from scenes.home_scene import HomeScene
         if all(bird.dead for bird in self.flappy_engine.get_birds()):
-            self.game.change_scene(HomeScene(self.game))
+            self.flappy_engine.on_finish(self.game, self.score_panel)
 
     def refresh_birds_score(self):
-        first_not_visited_pipe = next(
-            pipes for pipes in self.pipes if not pipes.visited)
-        not_dead_birds = [bird for bird in self.flappy_engine.get_birds() if
-                          not bird.dead]
-        if first_not_visited_pipe.get_x() + first_not_visited_pipe.get_width() < GAME_WIDTH / 2:
+        first_not_visited_pipe = next(pipes for pipes in self.pipes if not pipes.visited)
+        not_dead_birds = [bird for bird in self.flappy_engine.get_birds() if not bird.dead]
+
+        if first_not_visited_pipe.get_x() < GAME_WIDTH / 2:
             for pipes in self.pipes:
                 if not pipes.visited:
                     pipes.visited = True

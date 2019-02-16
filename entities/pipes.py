@@ -31,10 +31,10 @@ class Pipes:
         return lower_pipe, lower_rect, upper_pipe, upper_rect
 
     def get_x(self):
-        return self.lower_rect.x
+        return self.lower_rect.x + self.lower_pipe.get_width()
 
     def get_y(self):
-        return self.lower_rect.y
+        return self.lower_rect.y - 50
 
     def get_width(self):
         return self.lower_rect.width
@@ -48,5 +48,4 @@ class Pipes:
         self.upper_rect.x -= self.speed
 
     def is_collision(self, rect):
-        return self.lower_rect.colliderect(rect) or self.upper_rect.colliderect(
-            rect)
+        return self.lower_rect.colliderect(rect) or self.upper_rect.colliderect(rect)

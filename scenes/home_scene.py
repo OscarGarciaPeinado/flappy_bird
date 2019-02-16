@@ -7,6 +7,7 @@ from scenes.scene import Scene
 
 
 class HomeScene(Scene):
+
     def __init__(self, game):
         Scene.__init__(self, game)
         self.initialize_bg(game.screen)
@@ -28,7 +29,6 @@ class HomeScene(Scene):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
                 self.menu.on_press_return()
-                # self.game.change_scene(PlayScene(self.game, IaFlappyEngine()))
             if event.key == pygame.K_UP:
                 self.menu.on_press_up()
             if event.key == pygame.K_DOWN:

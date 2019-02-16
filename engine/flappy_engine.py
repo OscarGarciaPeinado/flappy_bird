@@ -1,6 +1,8 @@
 # coding: utf-8
 
-class FlappyMlEngine:
+
+class FlappyEngine:
+
     def get_birds(self):
         raise NotImplementedError
 
@@ -17,4 +19,7 @@ class FlappyMlEngine:
         raise NotImplementedError
 
     def on_event(self, event):
+        raise NotImplementedError
+
+    def on_finish(self, game, score_panel):
         raise NotImplementedError

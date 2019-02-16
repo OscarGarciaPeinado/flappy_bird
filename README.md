@@ -1,3 +1,3 @@
-##Flappy-Bird Kernel
+## Flappy-Bird Kernel
  
- With this kernel you could develop our own flappy bird bot.
+With this kernel you could develop your own flappy bird bot.

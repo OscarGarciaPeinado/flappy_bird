@@ -1,12 +1,12 @@
 # coding: utf-8
 import pygame
 
-from config import HEIGHT
+from engine.flappy_engine import FlappyEngine
 from entities.bird import Bird
-from ml_engine.flappy_ml_engine import FlappyMlEngine
 
 
-class ManualFlappyEngine(FlappyMlEngine):
+class ManualFlappyEngine(FlappyEngine):
+
     def __init__(self):
         self.birds = [Bird(name="Manual")]
 
@@ -36,3 +36,7 @@ class ManualFlappyEngine(FlappyMlEngine):
         for bird in self.birds:
             if floor.rect.y < bird.rect.centery:
                 bird.dead = True
+
+    def on_finish(self, game, score_panel):
+        from scenes.home_scene import HomeScene
+        game.change_scene(HomeScene(game))
