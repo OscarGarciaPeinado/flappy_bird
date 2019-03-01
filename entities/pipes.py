@@ -23,18 +23,17 @@ class Pipes:
         lower_rect.x, lower_rect.y = (x, y)
         lower_rect.inflate(-2, -2)
 
-        upper_pipe, upper_rect = rotate_center(lower_pipe,
-                                               lower_pipe.get_rect(), 180)
+        upper_pipe, upper_rect = rotate_center(lower_pipe, lower_pipe.get_rect(), 180)
         upper_rect.x, upper_rect.y = (x, y - 100 - upper_pipe.get_height())
         upper_rect.inflate(-2, -2)
 
         return lower_pipe, lower_rect, upper_pipe, upper_rect
 
     def get_x(self):
-        return self.lower_rect.x + self.lower_pipe.get_width()
+        return self.lower_rect.x
 
     def get_y(self):
-        return self.lower_rect.y - 50
+        return self.lower_rect.y
 
     def get_width(self):
         return self.lower_rect.width

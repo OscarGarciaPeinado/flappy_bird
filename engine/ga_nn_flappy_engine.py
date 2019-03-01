@@ -38,12 +38,12 @@ class GaNnFlappyEngine(FlappyEngine):
 
     def check_pipes_collision(self, pipes):
         for bird in self.birds:
-            if pipes.is_collision(bird.rect):
+            if not bird.dead and pipes.is_collision(bird.rect):
                 bird.dead = True
 
     def check_floor_collision(self, floor):
         for bird in self.birds:
-            if floor.rect.y < bird.rect.centery or bird.rect.centery < 0:
+            if not bird.dead and (floor.rect.y < bird.rect.centery or bird.rect.centery < 0):
                 bird.dead = True
 
     def on_finish(self, game, score_panel):

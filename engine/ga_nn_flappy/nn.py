@@ -3,7 +3,9 @@ import numpy as np
 
 class NN:
 
-    def __init__(self, n_input, n_hidden_layer, n_output):
+    def __init__(self, n_input, n_hidden_layer, n_output, random_seed=1234):
+        np.random.seed(random_seed)
+
         self.w1 = np.random.randn(n_input, n_hidden_layer)
         self.w2 = np.random.randn(n_hidden_layer, n_output)
         self.b1 = np.random.randn(1, n_hidden_layer)

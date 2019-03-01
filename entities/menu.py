@@ -32,7 +32,7 @@ class Menu(pygame.Surface):
 
         ga_nn_flappy_engine = GaNnFlappyEngine()
         self.add_menu_option("Bot", lambda: self.game.change_scene(
-            PlayScene(self.game, GaNnFlappyEngine(),
+            PlayScene(self.game, ga_nn_flappy_engine,
                       ScorePanel(self.game.screen, GAME_WIDTH,
                                  WIDTH - GAME_WIDTH,
                                  ga_nn_flappy_engine.get_birds()))))

@@ -3,7 +3,6 @@ import copy
 import random
 
 import numpy as np
-from pynput.keyboard import Controller
 
 from engine.ga_nn_flappy.nn import NN
 
@@ -13,7 +12,7 @@ class GaFlappy:
     def __init__(self, birds):
         self.population = []
         self.epoch = 1
-        self.mutate_rate = 0.3
+        self.mutate_rate = 0.1
 
         self.best_score = 0
         self.best_fitness = 0
@@ -21,19 +20,12 @@ class GaFlappy:
 
         self.generations = 0
 
-        self.keyboard = Controller()
-
     def initialize_population(self, birds):
-        i = 0
         for bird in birds:
-            population = {"bird": bird, "nn": NN(2, 6, 1)}
+            population = {"bird": bird, "nn": NN(2, 20, 1, int(bird.name) * 10)}
             self.population.append(population)
-            i = i + 1
 
     def update(self, next_pipe_x, next_pipe_y):
-        if 100 < next_pipe_x < 210:
-            print("aqui")
-
         for population in self.population:
             bird_x, bird_y = population["bird"].rect.center
             next_pipe_distance_x = bird_x - next_pipe_x
@@ -54,10 +46,9 @@ class GaFlappy:
         for i in range(n_parents):
             self.population[i].update(nn=parents[i])
 
-        for i in range(n_parents, n_offspring):
-            self.population[i].update(nn=next_generation[i])
+        for i in range(n_parents, len(self.population)):
+            self.population[i].update(nn=next_generation[i - n_parents])
 
-        print(self.generations)
         self.generations += 1
 
     @staticmethod
@@ -86,16 +77,18 @@ class GaFlappy:
     def crossover(parent_nn_1, parent_nn_2):
         cut_point = np.random.randint(1, len(parent_nn_1.b1[0]))
 
-        child = NN(2, 6, 1)
+        child = NN(2, 20, 1)
         child.b1 = copy.deepcopy(parent_nn_1.b1)
 
         for i in range(cut_point, len(parent_nn_1.b1[0])):
             child.b1[0][i] = parent_nn_2.b1[0][i]
 
         if np.random.randint(2):
+            child.b2 = copy.deepcopy(parent_nn_1.b2)
             child.w1 = copy.deepcopy(parent_nn_1.w1)
             child.w2 = copy.deepcopy(parent_nn_1.w2)
         else:
+            child.b2 = copy.deepcopy(parent_nn_2.b2)
             child.w1 = copy.deepcopy(parent_nn_2.w1)
             child.w2 = copy.deepcopy(parent_nn_2.w2)
 
@@ -105,6 +98,8 @@ class GaFlappy:
         for child in offspring:
             for i in range(len(child.b1[0])):
                 child.b1[0][i] = self.mutate(child.b1[0][i])
+
+            child.b2[0][0] = self.mutate(child.b2[0][0])
 
             for i in range(child.w1.shape[0]):
                 for j in range(child.w1.shape[1]):
