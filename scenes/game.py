@@ -1,8 +1,8 @@
-import pygame
 import sys
 
+import pygame
+
 from config import *
-from scenes.play_scene import PlayScene
 
 
 class Game():

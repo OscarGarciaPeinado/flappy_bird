@@ -22,24 +22,19 @@ class ScorePanel(Panel):
         pipes_x = self.bg_x + 0.7 * self.bg_width
         name_x = self.bg_x + 0.2 * self.bg_width
         distance_x = self.bg_x + 0.6 * self.bg_width
-        distance = self.score_text_font.render(str(bird.distance), 1,
-                                               (255, 255, 0))
+        distance = self.score_text_font.render(str(bird.distance), 1, (255, 255, 0))
         pipes = self.score_text_font.render(str(bird.score), 1, (255, 255, 0))
         name = self.score_text_font.render(bird.name, 1, (255, 255, 0))
 
         pygame.draw.rect(
-            self.screen, self.line_color, (self.bg_x, y + self.bird_slot_height,
-                                           self.bg_width, 4))
+            self.screen, self.line_color, (self.bg_x, y + self.bird_slot_height, self.bg_width, 4))
 
         screen.blit(name, (name_x, text_y))
         screen.blit(pipes, (pipes_x, text_y))
         screen.blit(distance, (distance_x, text_y))
 
     def draw(self):
-        pygame.draw.rect(self.screen, self.bg_color,
-                         (self.bg_x, 0, self.bg_width, HEIGHT))
-        pygame.draw.rect(self.screen, self.line_color,
-                         (self.bg_x, 0, 4, HEIGHT))
+        pygame.draw.rect(self.screen, self.bg_color, (self.bg_x, 0, self.bg_width, HEIGHT))
+        pygame.draw.rect(self.screen, self.line_color, (self.bg_x, 0, 4, HEIGHT))
         for index, bird in enumerate(self.birds):
-            self.draw_bird_score(self.screen, bird,
-                                 float(index * self.bird_slot_height))
+            self.draw_bird_score(self.screen, bird, float(index * self.bird_slot_height))

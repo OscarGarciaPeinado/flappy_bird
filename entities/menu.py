@@ -3,10 +3,10 @@ from collections import OrderedDict
 import pygame
 
 from config import HEIGHT, WIDTH, GAME_WIDTH
+from engine.ga_nn_flappy_engine import GaNnFlappyEngine
+from engine.manual_flappy_engine import ManualFlappyEngine
 from entities.option_menu import OptionMenu
 from entities.scorepanel import ScorePanel
-from ml_engine.ga_ann_flappy_engine.ia_flappy_engine import IaFlappyEngine
-from ml_engine.manual_flappy_engine import ManualFlappyEngine
 from repository.image_loader import ImageLoader
 from scenes.play_scene import PlayScene
 from utils import root_path
@@ -30,12 +30,12 @@ class Menu(pygame.Surface):
         self.add_menu_option("Manual", lambda: self.game.change_scene(
             PlayScene(self.game, ManualFlappyEngine(), None)))
 
-        ia_flappy_engine = IaFlappyEngine()
+        ga_nn_flappy_engine = GaNnFlappyEngine()
         self.add_menu_option("Bot", lambda: self.game.change_scene(
-            PlayScene(self.game, IaFlappyEngine(),
+            PlayScene(self.game, ga_nn_flappy_engine,
                       ScorePanel(self.game.screen, GAME_WIDTH,
                                  WIDTH - GAME_WIDTH,
-                                 ia_flappy_engine.get_birds()))))
+                                 ga_nn_flappy_engine.get_birds()))))
 
         self.set_header((width / 2))
 
